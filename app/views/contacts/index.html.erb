@@ -1,0 +1,47 @@
+
+<% content_for :title, "All Contacts" %>
+
+
+
+<% if user_signed_in? %>
+  <h1>My Contacts</h1>
+
+  <table class="table table-striped table-bordered table-hover">
+
+    <thead class="table-dark">
+      <tr>
+        <td>First Name</td>
+        <td>Last Name</td>
+        <td>Email</td>
+        <td>Phone</td>
+        <td>Category</td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% @contacts.each do |contact| %>
+      <% if contact.user == current_user %>
+      <tr>
+        <td><%= contact.first_name %></td>
+        <td><%= contact.last_name %></td>
+        <td><%= contact.email %></td>
+        <td><%= contact.phone %></td>
+        <td><%= contact.category %></td>
+        <td><%= link_to "Show More", contact %></td>
+        <td><%= link_to "Edit Contact", edit_contact_path(contact) %> </td>
+        <td><%= link_to "Delete Contact", contact,data: { turbo_method: :delete, turbo_confirm: "Are you sure you want to delete this contact?" } %></td>
+      </tr>
+      <% end %>
+      <% end %>
+    </tbody>
+  </table>
+
+
+  <%= link_to "New contact", new_contact_path, class:"btn btn-dark" %>
+
+<% else %>
+<h1> Please login to view your stored Contacts.</h1>
+<% end %>
